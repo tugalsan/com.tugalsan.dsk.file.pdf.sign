@@ -246,8 +246,9 @@ public class KeyStoreUtils {
      * @return array of certificate aliases
      */
     public static String[] getCertAliases(KeyStore tmpKs) {
-        if (tmpKs == null)
+        if (tmpKs == null) {
             return null;
+        }
         final List<String> tmpResult = new ArrayList<String>();
         try {
             final Enumeration<String> tmpAliases = tmpKs.aliases();
@@ -309,7 +310,8 @@ public class KeyStoreUtils {
     }
 
     /**
-     * Copies certificates from one keystore to another (both keystore has to be initialized.
+     * Copies certificates from one keystore to another (both keystore has to be
+     * initialized.
      *
      * @param fromKeyStore
      * @param toKeyStore
@@ -368,9 +370,11 @@ public class KeyStoreUtils {
     }
 
     /**
-     * Loads the default root certificates at &lt;java.home&gt;/lib/security/cacerts.
+     * Loads the default root certificates at
+     * &lt;java.home&gt;/lib/security/cacerts.
      *
-     * @param provider the provider or <code>null</code> for the default provider
+     * @param provider the provider or <code>null</code> for the default
+     * provider
      * @return a <CODE>KeyStore</CODE>
      */
     public static KeyStore loadCacertsKeyStore(String provider) {
@@ -383,10 +387,11 @@ public class KeyStoreUtils {
         try {
             fin = new FileInputStream(file);
             KeyStore k;
-            if (provider == null)
+            if (provider == null) {
                 k = KeyStore.getInstance("JKS");
-            else
+            } else {
                 k = KeyStore.getInstance("JKS", provider);
+            }
             k.load(fin, null);
             return k;
         } catch (Exception e) {
@@ -408,6 +413,9 @@ public class KeyStoreUtils {
      */
     public static PrivateKeyInfo getPkInfo(BasicSignerOptions options)
             throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+        LOGGER.info(KeyStoreUtils.class + ".getPkInfo.options.getKsType():" + options.getKsType());
+        LOGGER.info(KeyStoreUtils.class + ".getPkInfo.options.getKsFile():" + options.getKsFile());
+        LOGGER.info(KeyStoreUtils.class + ".getPkInfo.options.getKsPasswd():" + options.getKsPasswd());
         final KeyStore tmpKs = loadKeyStore(options.getKsType(), options.getKsFile(), options.getKsPasswd());
 
         String tmpAlias = getKeyAliasInternal(options, tmpKs);
@@ -420,7 +428,8 @@ public class KeyStoreUtils {
     }
 
     /**
-     * Loads a {@link X509Certificate} from the given path. Returns null if the certificate can't be loaded.
+     * Loads a {@link X509Certificate} from the given path. Returns null if the
+     * certificate can't be loaded.
      *
      * @param filePath
      * @return
@@ -445,7 +454,8 @@ public class KeyStoreUtils {
     }
 
     /**
-     * Returns true if the given certificate can be used for encryption, false otherwise.
+     * Returns true if the given certificate can be used for encryption, false
+     * otherwise.
      *
      * @param cert
      * @return

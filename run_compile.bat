@@ -1,0 +1,1 @@
+mvnd clean install

@@ -118,12 +118,50 @@ public class SignerLogic implements Runnable {
         signFile();
     }
 
+    public void printOptions() {
+        LOGGER.info("options.getBgImgPath(): " + options.getBgImgPath());
+        LOGGER.info("options.getContact(): " + options.getContact());
+        LOGGER.info("options.getImgPath(): " + options.getImgPath());
+        LOGGER.info("options.getInFile(): " + options.getInFile());
+        LOGGER.info("options.getKeyAlias(): " + options.getKeyAlias());
+        LOGGER.info("options.getKeyAliasX(): " + options.getKeyAliasX());
+        LOGGER.info("options.getKeyPasswdStr(): " + options.getKeyPasswdStr());
+        LOGGER.info("options.getKsFile(): " + options.getKsFile());
+        LOGGER.info("options.getKsPasswdStr(): " + options.getKsPasswdStr());
+        LOGGER.info("options.getKsType(): " + options.getKsType());
+        LOGGER.info("options.getL2Text(): " + options.getL2Text());
+        LOGGER.info("options.getL4Text(): " + options.getL4Text());
+        LOGGER.info("options.getLocation(): " + options.getLocation());
+        LOGGER.info("options.getOcspServerUrl(): " + options.getOcspServerUrl());
+        LOGGER.info("options.getOutFile(): " + options.getOutFile());
+        LOGGER.info("options.getOutFileX(): " + options.getOutFileX());
+        LOGGER.info("options.getPdfEncryptionCertFile(): " + options.getPdfEncryptionCertFile());
+        LOGGER.info("options.getPdfOwnerPwdStr(): " + options.getPdfOwnerPwdStr());
+        LOGGER.info("options.getPdfOwnerPwdStrX(): " + options.getPdfOwnerPwdStrX());
+        LOGGER.info("options.getPdfUserPwdStr(): " + options.getPdfUserPwdStr());
+        LOGGER.info("options.getPropertiesFilePath(): " + options.getPropertiesFilePath());
+        LOGGER.info("options.getProxyHost(): " + options.getProxyHost());
+        LOGGER.info("options.getReason(): " + options.getReason());
+        LOGGER.info("options.getSignerName(): " + options.getSignerName());
+        LOGGER.info("options.getTsaCertFile(): " + options.getTsaCertFile());
+        LOGGER.info("options.getTsaCertFilePwd(): " + options.getTsaCertFilePwd());
+        LOGGER.info("options.getTsaCertFilePwd(): " + options.getTsaCertFilePwd());
+        LOGGER.info("options.getTsaCertFileType(): " + options.getTsaCertFileType());
+        LOGGER.info("options.getTsaHashAlg(): " + options.getTsaHashAlg());
+        LOGGER.info("options.getTsaHashAlgWithFallback(): " + options.getTsaHashAlgWithFallback());
+        LOGGER.info("options.getTsaPasswd(): " + options.getTsaPasswd());
+        LOGGER.info("options.getTsaPolicy(): " + options.getTsaPolicy());
+        LOGGER.info("options.getTsaUrl(): " + options.getTsaUrl());
+        LOGGER.info("options.getTsaUser(): " + options.getTsaUser());
+    }
+
     /**
      * Signs a single file.
      *
      * @return true when signing is finished succesfully, false otherwise
      */
     public boolean signFile() {
+        printOptions();
         final String outFile = options.getOutFileX();
         if (!validateInOutFiles(options.getInFile(), outFile)) {
             LOGGER.info(RES.get("console.skippingSigning"));
@@ -198,7 +236,7 @@ public class SignerLogic implements Runnable {
                 }
                 tmpPdfVersion = requiredPdfVersionForGivenHash;
                 LOGGER.info(RES.get("console.updateVersion",
-                        new String[] { String.valueOf(inputPdfVersion), String.valueOf(tmpPdfVersion) }));
+                        new String[]{String.valueOf(inputPdfVersion), String.valueOf(tmpPdfVersion)}));
             }
 
             final PdfStamper stp = PdfStamper.createSignature(reader, fout, tmpPdfVersion, null, options.isAppendX());
@@ -235,7 +273,7 @@ public class SignerLogic implements Runnable {
                             LOGGER.severe(RES.get("console.pdfEncError.cantUseCertificate", encCert.getSubjectDN().getName()));
                             return false;
                         }
-                        stp.setEncryption(new Certificate[] { encCert }, new int[] { tmpRight }, PdfWriter.ENCRYPTION_AES_128);
+                        stp.setEncryption(new Certificate[]{encCert}, new int[]{tmpRight}, PdfWriter.ENCRYPTION_AES_128);
                         break;
                     default:
                         LOGGER.severe(RES.get("console.unsupportedEncryptionType"));
@@ -306,10 +344,12 @@ public class SignerLogic implements Runnable {
                     final StringBuilder buf = new StringBuilder();
                     buf.append(RES.get("default.l2text.signedBy")).append(" ").append(signer).append('\n');
                     buf.append(RES.get("default.l2text.date")).append(" ").append(timestamp);
-                    if (StringUtils.isNotEmpty(reason))
+                    if (StringUtils.isNotEmpty(reason)) {
                         buf.append('\n').append(RES.get("default.l2text.reason")).append(" ").append(reason);
-                    if (StringUtils.isNotEmpty(location))
+                    }
+                    if (StringUtils.isNotEmpty(location)) {
                         buf.append('\n').append(RES.get("default.l2text.location")).append(" ").append(location);
+                    }
                     sap.setLayer2Text(buf.toString());
                 }
                 if (FontUtils.getL2BaseFont() != null) {

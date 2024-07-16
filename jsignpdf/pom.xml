@@ -60,6 +60,59 @@
                     </transformers>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>clean_and_upgrade</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <commandlineArgs>-jar C:/git/trm/com.tugalsan.trm.migration.jakarta/target/com.tugalsan.trm.migration.jakarta-1.0.9-SNAPSHOT-shaded.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\jsignpdf\target\jsignpdf-2.3.0-SNAPSHOT-jar-with-dependencies.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar</commandlineArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <target>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar" tofile="C:\bin\com.tugalsan.dsk.pdf.sign\home\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar" tofile="\\10.0.0.10\d\bin\com.tugalsan.dsk.pdf.sign\home\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar"/> 
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar" tofile="\\192.168.7.1\d\bin\com.tugalsan.dsk.pdf.sign\home\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar"/> 
+
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_gui.bat" tofile="C:\bin\com.tugalsan.dsk.pdf.sign\home\run_gui.bat"/>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_gui.bat" tofile="\\10.0.0.10\d\bin\com.tugalsan.dsk.pdf.sign\home\run_gui.bat"/> 
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_gui.bat" tofile="\\192.168.7.1\d\bin\com.tugalsan.dsk.pdf.sign\home\run_gui.bat"/> 
+
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_manual.bat" tofile="C:\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_manual.bat"/>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_manual.bat" tofile="\\10.0.0.10\d\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_manual.bat"/> 
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_manual.bat" tofile="\\192.168.7.1\d\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_manual.bat"/>
+
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_with_props.bat" tofile="C:\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_with_props.bat"/>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_with_props.bat" tofile="\\10.0.0.10\d\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_with_props.bat"/> 
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\run_sign_with_props.bat" tofile="\\192.168.7.1\d\bin\com.tugalsan.dsk.pdf.sign\home\run_sign_with_props.bat"/>
+
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\file.pdf" tofile="C:\bin\com.tugalsan.dsk.pdf.sign\home\file.pdf"/>
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\file.pdf" tofile="\\10.0.0.10\d\bin\com.tugalsan.dsk.pdf.sign\home\file.pdf"/> 
+                        <copy file="C:\git\dsk\com.tugalsan.dsk.pdf.sign\file.pdf" tofile="\\192.168.7.1\d\bin\com.tugalsan.dsk.pdf.sign\home\file.pdf"/> 
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

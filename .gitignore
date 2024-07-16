@@ -22,3 +22,8 @@ target/
 jsignpdf/conf/
 dependency-reduced-pom.xml
 guide.md
+settings.properties
+file_signed.pdf
+run_sign_manual.bat
+config.properties
+file.pdf

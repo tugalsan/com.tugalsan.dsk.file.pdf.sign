@@ -61,7 +61,6 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
 
     // private final static Logger LOGGER =
     // Logger.getLogger(SignerOptionsFromCmdLine.class);
-
     static final Options OPTS = new Options();
 
     private String outPrefix;
@@ -79,13 +78,15 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
 
     /**
      * Parses options provided as command line arguments.
+     *
      * @throws ParseException
      */
     @Override
     public void loadCmdLine() throws ParseException {
         String[] cmdLine = getCmdLine();
-        if (cmdLine == null)
+        if (cmdLine == null) {
             return;
+        }
 
         // create the command line parser
         final CommandLineParser parser = new DefaultParser();
@@ -123,51 +124,72 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
         setListKeys(line.hasOption(ARG_LIST_KEYS));
 
         // basic options
-        if (line.hasOption(ARG_KS_TYPE))
+        if (line.hasOption(ARG_KS_TYPE)) {
             setKsType(line.getOptionValue(ARG_KS_TYPE));
-        if (line.hasOption(ARG_KS_FILE))
+        }
+        if (line.hasOption(ARG_KS_FILE)) {
             setKsFile(line.getOptionValue(ARG_KS_FILE));
-        if (line.hasOption(ARG_KS_PWD))
+        }
+        if (line.hasOption(ARG_KS_PWD)) {
             setKsPasswd(line.getOptionValue(ARG_KS_PWD));
-        if (line.hasOption(ARG_KEY_ALIAS))
+        }
+        if (line.hasOption(ARG_KEY_ALIAS)) {
             setKeyAlias(line.getOptionValue(ARG_KEY_ALIAS));
-        if (line.hasOption(ARG_KEY_INDEX))
+        }
+        if (line.hasOption(ARG_KEY_INDEX)) {
             setKeyIndex(getInt(line.getParsedOptionValue(ARG_KEY_INDEX), getKeyIndex()));
-        if (line.hasOption(ARG_KEY_PWD))
+        }
+        if (line.hasOption(ARG_KEY_PWD)) {
             setKeyPasswd(line.getOptionValue(ARG_KEY_PWD));
-        if (line.hasOption(ARG_OUTPATH))
+        }
+        if (line.hasOption(ARG_OUTPATH)) {
             setOutPath(line.getOptionValue(ARG_OUTPATH));
-        if (line.hasOption(ARG_OPREFIX))
+        }
+        if (line.hasOption(ARG_OPREFIX)) {
             setOutPrefix(line.getOptionValue(ARG_OPREFIX));
-        if (line.hasOption(ARG_OSUFFIX))
+        }
+        if (line.hasOption(ARG_OSUFFIX)) {
             setOutSuffix(line.getOptionValue(ARG_OSUFFIX));
-        if (line.hasOption(ARG_SIGNER_NAME))
+        }
+        if (line.hasOption(ARG_SIGNER_NAME)) {
             setSignerName(line.getOptionValue(ARG_SIGNER_NAME));
-        if (line.hasOption(ARG_REASON))
+        }
+        if (line.hasOption(ARG_REASON)) {
             setReason(line.getOptionValue(ARG_REASON));
-        if (line.hasOption(ARG_LOCATION))
+        }
+        if (line.hasOption(ARG_LOCATION)) {
             setLocation(line.getOptionValue(ARG_LOCATION));
-        if (line.hasOption(ARG_CONTACT))
+        }
+        if (line.hasOption(ARG_CONTACT)) {
             setContact(line.getOptionValue(ARG_CONTACT));
+        }
         setAppend(line.hasOption(ARG_APPEND));
-        if (line.hasOption(ARG_CERT_LEVEL))
+        if (line.hasOption(ARG_CERT_LEVEL)) {
             setCertLevel(line.getOptionValue(ARG_CERT_LEVEL));
-        if (line.hasOption(ARG_HASH_ALGORITHM))
+        }
+        if (line.hasOption(ARG_HASH_ALGORITHM)) {
             setHashAlgorithm(line.getOptionValue(ARG_HASH_ALGORITHM));
+        }
 
         // encryption
-        if (line.hasOption(ARG_ENCRYPTED))
+        if (line.hasOption(ARG_ENCRYPTED)) {
             setPdfEncryption(PDFEncryption.PASSWORD);
-        if (line.hasOption(ARG_ENCRYPTION))
+        }
+        if (line.hasOption(ARG_ENCRYPTION)) {
             setPdfEncryption(line.getOptionValue(ARG_ENCRYPTION));
-        if (line.hasOption(ARG_PWD_OWNER))
+        }
+        if (line.hasOption(ARG_PWD_OWNER)) {
             setPdfOwnerPwd(line.getOptionValue(ARG_PWD_OWNER));
-        if (line.hasOption(ARG_PWD_USER))
+        }
+        if (line.hasOption(ARG_PWD_USER)) {
             setPdfUserPwd(line.getOptionValue(ARG_PWD_USER));
-        if (line.hasOption(ARG_ENC_CERT))
+        }
+        if (line.hasOption(ARG_ENC_CERT)) {
             setPdfEncryptionCertFile(line.getOptionValue(ARG_ENC_CERT));
-        if (line.hasOption(ARG_RIGHT_PRINT))
+        }
+        if (line.hasOption(ARG_RIGHT_PRINT)) {
             setRightPrinting(line.getOptionValue(ARG_RIGHT_PRINT));
+        }
         setRightCopy(!line.hasOption(ARG_DISABLE_COPY_LONG));
         setRightAssembly(!line.hasOption(ARG_DISABLE_ASSEMBLY_LONG));
         setRightFillIn(!line.hasOption(ARG_DISABLE_FILL_LONG));
@@ -176,32 +198,45 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
         setRightModifyContents(!line.hasOption(ARG_DISABLE_MODIFY_CONTENT_LONG));
 
         // visible signature
-        if (line.hasOption(ARG_VISIBLE))
+        if (line.hasOption(ARG_VISIBLE)) {
             setVisible(true);
-        if (line.hasOption(ARG_PAGE))
+        }
+        if (line.hasOption(ARG_PAGE)) {
             setPage(getInt(line.getParsedOptionValue(ARG_PAGE), getPage()));
-        if (line.hasOption(ARG_POS_LLX))
+        }
+        if (line.hasOption(ARG_POS_LLX)) {
             setPositionLLX(getFloat(line.getParsedOptionValue(ARG_POS_LLX), getPositionLLX()));
-        if (line.hasOption(ARG_POS_LLY))
+        }
+        if (line.hasOption(ARG_POS_LLY)) {
             setPositionLLY(getFloat(line.getParsedOptionValue(ARG_POS_LLY), getPositionLLY()));
-        if (line.hasOption(ARG_POS_URX))
+        }
+        if (line.hasOption(ARG_POS_URX)) {
             setPositionURX(getFloat(line.getParsedOptionValue(ARG_POS_URX), getPositionURX()));
-        if (line.hasOption(ARG_POS_URY))
+        }
+        if (line.hasOption(ARG_POS_URY)) {
             setPositionURY(getFloat(line.getParsedOptionValue(ARG_POS_URY), getPositionURY()));
-        if (line.hasOption(ARG_BG_SCALE))
+        }
+        if (line.hasOption(ARG_BG_SCALE)) {
             setBgImgScale(getFloat(line.getParsedOptionValue(ARG_BG_SCALE), getBgImgScale()));
-        if (line.hasOption(ARG_RENDER_MODE))
+        }
+        if (line.hasOption(ARG_RENDER_MODE)) {
             setRenderMode(line.getOptionValue(ARG_RENDER_MODE));
-        if (line.hasOption(ARG_L2_TEXT_LONG))
+        }
+        if (line.hasOption(ARG_L2_TEXT_LONG)) {
             setL2Text(line.getOptionValue(ARG_L2_TEXT_LONG));
-        if (line.hasOption(ARG_L2TEXT_FONT_SIZE))
+        }
+        if (line.hasOption(ARG_L2TEXT_FONT_SIZE)) {
             setL2TextFontSize(getFloat(line.getParsedOptionValue(ARG_L2TEXT_FONT_SIZE), getL2TextFontSize()));
-        if (line.hasOption(ARG_L4_TEXT_LONG))
+        }
+        if (line.hasOption(ARG_L4_TEXT_LONG)) {
             setL4Text(line.getOptionValue(ARG_L4_TEXT_LONG));
-        if (line.hasOption(ARG_IMG_PATH))
+        }
+        if (line.hasOption(ARG_IMG_PATH)) {
             setImgPath(line.getOptionValue(ARG_IMG_PATH));
-        if (line.hasOption(ARG_BG_PATH))
+        }
+        if (line.hasOption(ARG_BG_PATH)) {
             setBgImgPath(line.getOptionValue(ARG_BG_PATH));
+        }
         setAcro6Layers(!line.hasOption(ARG_DISABLE_ACRO6LAYERS));
 
         // TSA & OCSP
@@ -209,36 +244,50 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
             setTimestamp(true);
             setTsaUrl(line.getOptionValue(ARG_TSA_URL));
         }
-        if (line.hasOption(ARG_TSA_AUTHN))
+        if (line.hasOption(ARG_TSA_AUTHN)) {
             setTsaServerAuthn(line.getOptionValue(ARG_TSA_AUTHN));
-        if (line.hasOption(ARG_TSA_CERT_FILE_TYPE))
+        }
+        if (line.hasOption(ARG_TSA_CERT_FILE_TYPE)) {
             setTsaCertFileType(line.getOptionValue(ARG_TSA_CERT_FILE_TYPE));
-        if (line.hasOption(ARG_TSA_CERT_FILE))
+        }
+        if (line.hasOption(ARG_TSA_CERT_FILE)) {
             setTsaCertFile(line.getOptionValue(ARG_TSA_CERT_FILE));
-        if (line.hasOption(ARG_TSA_CERT_PWD))
+        }
+        if (line.hasOption(ARG_TSA_CERT_PWD)) {
             setTsaCertFilePwd(line.getOptionValue(ARG_TSA_CERT_PWD));
+        }
 
-        if (line.hasOption(ARG_TSA_USER))
+        if (line.hasOption(ARG_TSA_USER)) {
             setTsaUser(line.getOptionValue(ARG_TSA_USER));
-        if (line.hasOption(ARG_TSA_PWD))
+        }
+        if (line.hasOption(ARG_TSA_PWD)) {
             setTsaPasswd(line.getOptionValue(ARG_TSA_PWD));
-        if (line.hasOption(ARG_TSA_POLICY_LONG))
+        }
+        if (line.hasOption(ARG_TSA_POLICY_LONG)) {
             setTsaPolicy(line.getOptionValue(ARG_TSA_POLICY_LONG));
-        if (line.hasOption(ARG_TSA_HASH_ALG))
+        }
+        if (line.hasOption(ARG_TSA_HASH_ALG)) {
             setTsaHashAlg(line.getOptionValue(ARG_TSA_HASH_ALG));
-        if (line.hasOption(ARG_OCSP_LONG))
+        }
+        if (line.hasOption(ARG_OCSP_LONG)) {
             setOcspEnabled(true);
-        if (line.hasOption(ARG_OCSP_SERVER_LONG))
+        }
+        if (line.hasOption(ARG_OCSP_SERVER_LONG)) {
             setOcspServerUrl(line.getOptionValue(ARG_OCSP_SERVER_LONG));
-        if (line.hasOption(ARG_CRL_LONG))
+        }
+        if (line.hasOption(ARG_CRL_LONG)) {
             setCrlEnabled(true);
+        }
 
-        if (line.hasOption(ARG_PROXY_TYPE_LONG))
+        if (line.hasOption(ARG_PROXY_TYPE_LONG)) {
             setProxyType(line.getOptionValue(ARG_PROXY_TYPE_LONG));
-        if (line.hasOption(ARG_PROXY_HOST_LONG))
+        }
+        if (line.hasOption(ARG_PROXY_HOST_LONG)) {
             setProxyHost(line.getOptionValue(ARG_PROXY_HOST_LONG));
-        if (line.hasOption(ARG_PROXY_PORT_LONG))
+        }
+        if (line.hasOption(ARG_PROXY_PORT_LONG)) {
             setProxyPort(getInt(line.getParsedOptionValue(ARG_PROXY_PORT_LONG), getProxyPort()));
+        }
 
         setGui(line.hasOption(ARG_GUI));
         if (ArrayUtils.isNotEmpty(files)) {
@@ -438,8 +487,9 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
      * @return the outPrefix
      */
     public String getOutPrefix() {
-        if (outPrefix == null)
+        if (outPrefix == null) {
             outPrefix = "";
+        }
         return outPrefix;
     }
 
@@ -474,8 +524,9 @@ public class SignerOptionsFromCmdLine extends BasicSignerOptions {
      * @return the outSuffix
      */
     public String getOutSuffix() {
-        if (outSuffix == null)
+        if (outSuffix == null) {
             outSuffix = "";
+        }
         return outSuffix;
     }
 
