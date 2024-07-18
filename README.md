@@ -1,3 +1,8 @@
+# WARNING
+Project default settings file is not located at execution directory.
+
+
+
 # JSignPdf
 
 [![Download JSignPdf](https://img.shields.io/sourceforge/dm/jsignpdf.svg)](https://sourceforge.net/projects/jsignpdf/files/latest/download)
