@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf.utils;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.RES;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
@@ -199,6 +200,7 @@ public class KeyStoreUtils {
                 }
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.log(Level.SEVERE, RES.get("console.exception"), e);
         }
         return tmpResult;
@@ -259,6 +261,7 @@ public class KeyStoreUtils {
                 }
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
             return null;
         }
@@ -361,6 +364,7 @@ public class KeyStoreUtils {
             tmpKs.load(tmpIS, aKsPasswd);
             fixAliases(tmpKs);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
             return null;
         } finally {
@@ -395,6 +399,7 @@ public class KeyStoreUtils {
             k.load(fin, null);
             return k;
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
             return null;
         } finally {
@@ -446,6 +451,7 @@ public class KeyStoreUtils {
             inStream = FileUtils.openInputStream(new File(filePath));
             cert = (X509Certificate) certFac.generateCertificate(inStream);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.log(Level.FINE, "Unable to load certificate", e);
         } finally {
             IOUtils.closeQuietly(inStream);
@@ -467,6 +473,7 @@ public class KeyStoreUtils {
                 Cipher.getInstance(cert.getPublicKey().getAlgorithm());
                 result = true;
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 LOGGER.log(Level.FINE, "Not possible to encrypt with the certificate", e);
             }
         }
@@ -528,6 +535,7 @@ public class KeyStoreUtils {
                 }
             }
         } catch (Exception exception) {
+            TGS_UnSafe.throwIfInterruptedException(exception);
             // nothing to do here
         }
     }

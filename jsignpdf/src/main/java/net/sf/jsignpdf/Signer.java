@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.EXIT_CODE_NO_COMMAND;
 import static net.sf.jsignpdf.Constants.EXIT_CODE_PARSE_ERR;
 import static net.sf.jsignpdf.Constants.NEW_LINE;
@@ -64,8 +65,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * JSignPdf main class - it either process command line or if no argument is given, sets system Look&Feel and creates
- * SignPdfForm GUI.
+ * JSignPdf main class - it either process command line or if no argument is
+ * given, sets system Look&Feel and creates SignPdfForm GUI.
  *
  * @author Josef Cacek
  */
@@ -78,7 +79,7 @@ public class Signer {
         final HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(80, "java -jar JSignPdf.jar [file1.pdf [file2.pdf ...]]", RES.get("hlp.header"),
                 SignerOptionsFromCmdLine.OPTS, NEW_LINE + RES.get("hlp.footer.exitCodes") + NEW_LINE
-                        + StringUtils.repeat("-", 80) + NEW_LINE + RES.get("hlp.footer.examples"),
+                + StringUtils.repeat("-", 80) + NEW_LINE + RES.get("hlp.footer.examples"),
                 true);
     }
 
@@ -98,6 +99,7 @@ public class Signer {
         try {
             SSLInitializer.init();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.log(Level.WARNING, "Unable to re-configure SSL layer", e);
         }
 
@@ -154,6 +156,7 @@ public class Signer {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 System.err.println("Can't set Look&Feel.");
             }
             SignPdfForm tmpForm = new SignPdfForm(WindowConstants.EXIT_ON_CLOSE, tmpOpts);
@@ -164,9 +167,10 @@ public class Signer {
     }
 
     /**
-     * Writes info about security providers to the {@link Logger} instance. The log-level for messages is FINER.
+     * Writes info about security providers to the {@link Logger} instance. The
+     * log-level for messages is FINER.
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     private static void traceInfo() {
         if (LOGGER.isLoggable(Level.FINER)) {
             try {
@@ -178,6 +182,7 @@ public class Signer {
                     try {
                         Collections.sort(keyList);
                     } catch (Exception e) {
+                        TGS_UnSafe.throwIfInterruptedException(e);
                         LOGGER.log(Level.FINER, "Provider's properties keys can't be sorted", e);
                     }
                     Iterator keyIterator = keyList.iterator();
@@ -188,6 +193,7 @@ public class Signer {
                     LOGGER.finer("------------------------------------------------");
                 }
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 LOGGER.log(Level.FINER, "Listing security providers failed", e);
             }
         }
@@ -223,13 +229,13 @@ public class Signer {
                     continue;
                 }
             } else {
-                inputFiles = new File[] { wildcardFile };
+                inputFiles = new File[]{wildcardFile};
             }
             for (File inputFile : inputFiles) {
                 final String tmpInFile = inputFile.getPath();
                 if (!inputFile.canRead()) {
                     failedCount++;
-                    System.err.println(RES.get("file.notReadable", new String[] { tmpInFile }));
+                    System.err.println(RES.get("file.notReadable", new String[]{tmpInFile}));
                     continue;
                 }
                 anOpts.setInFile(tmpInFile);

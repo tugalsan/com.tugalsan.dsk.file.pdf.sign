@@ -55,6 +55,7 @@ import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PDFParseException;
 import com.sun.pdfview.decrypt.PDFPassword;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 
 /**
  * Helper class for converting a page in PDF to a {@link BufferedImage} object.
@@ -68,13 +69,15 @@ public class Pdf2Image {
     private BasicSignerOptions options;
 
     /**
-     * Constructor - gets an options object with configured input PDF and possibly decoding (owner) password.
+     * Constructor - gets an options object with configured input PDF and
+     * possibly decoding (owner) password.
      *
      * @param anOpts
      */
     public Pdf2Image(BasicSignerOptions anOpts) {
-        if (anOpts == null)
+        if (anOpts == null) {
             throw new NullPointerException("Options have to be not-null");
+        }
         options = anOpts;
     }
 
@@ -94,14 +97,16 @@ public class Pdf2Image {
             } else if (Constants.PDF2IMAGE_PDFBOX.equals(libname)) {
                 tmpResult = getImageUsingPdfBox(aPage);
             }
-            if (tmpResult != null)
+            if (tmpResult != null) {
                 break;
+            }
         }
         return tmpResult;
     }
 
     /**
-     * Returns image (or null if failed) generated from given page in PDF using JPedal LGPL.
+     * Returns image (or null if failed) generated from given page in PDF using
+     * JPedal LGPL.
      *
      * @param aPage page in PDF (1 based)
      * @return image or null
@@ -129,6 +134,7 @@ public class Pdf2Image {
                 tmpResult = pdfDecoder.getPageAsImage(aPage);
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -142,7 +148,8 @@ public class Pdf2Image {
     }
 
     /**
-     * Returns image (or null if failed) generated from given page in PDF using Sun PDFRender.
+     * Returns image (or null if failed) generated from given page in PDF using
+     * Sun PDFRender.
      *
      * @param aPage page in PDF (1 based)
      * @return image or null
@@ -184,6 +191,7 @@ public class Pdf2Image {
                     true // block until drawing is done
             );
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (raf != null) {
@@ -198,7 +206,8 @@ public class Pdf2Image {
     }
 
     /**
-     * Returns image (or null if failed) generated from given page in PDF using PDFBox tool.
+     * Returns image (or null if failed) generated from given page in PDF using
+     * PDFBox tool.
      *
      * @param aPage page in PDF (1 based)
      * @return image or null
@@ -222,12 +231,14 @@ public class Pdf2Image {
             PDFRenderer rendedrer = new PDFRenderer(tmpDoc);
             tmpResult = rendedrer.renderImageWithDPI(aPage - 1, resolution);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (tmpDoc != null) {
                 try {
                     tmpDoc.close();
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
             }

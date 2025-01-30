@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf.utils;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
 import java.io.File;
@@ -50,10 +51,12 @@ public class PKCS11Utils {
     public static volatile Provider JSIGN_PROVIDER;
 
     /**
-     * Tries to register the sun.security.pkcs11.SunPKCS11 provider with configuration provided in the given file.
+     * Tries to register the sun.security.pkcs11.SunPKCS11 provider with
+     * configuration provided in the given file.
      *
      * @param configPath path to PKCS#11 provider configuration file
-     * @return newly registered PKCS#11 provider name if provider successfully registered; <code>null</code> otherwise
+     * @return newly registered PKCS#11 provider name if provider successfully
+     * registered; <code>null</code> otherwise
      */
     public static void registerProviders(final String configPath) {
         if (StringUtils.isEmpty(configPath)) {
@@ -71,10 +74,12 @@ public class PKCS11Utils {
     }
 
     /**
-     * Unregisters PKCS11 security provider registered by {@link #registerProviders(String)} method.
+     * Unregisters PKCS11 security provider registered by
+     * {@link #registerProviders(String)} method.
      * <p>
-     * Some tokens/card-readers hangs during second usage of the program, they have to be unplugged and plugged again following
-     * code should prevent this issue.
+     * Some tokens/card-readers hangs during second usage of the program, they
+     * have to be unplugged and plugged again following code should prevent this
+     * issue.
      * </p>
      *
      * @param providerName
@@ -131,6 +136,7 @@ public class PKCS11Utils {
         try {
             Security.removeProvider(providerName);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.log(Level.SEVERE, "Removing provider failed", e);
         }
         return null;
@@ -146,6 +152,7 @@ public class PKCS11Utils {
             LOGGER.fine("KeyStore type " + type + " is supported by the provider " + providerName);
             return provider.getName();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.fine("KeyStore type " + type + " is not supported by the provider " + providerName);
         }
         return null;

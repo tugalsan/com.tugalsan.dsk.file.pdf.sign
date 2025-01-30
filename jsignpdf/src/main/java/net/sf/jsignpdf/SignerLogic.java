@@ -86,6 +86,7 @@ import com.lowagie.text.pdf.PdfStamper;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.TSAClientBouncyCastle;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 
 /**
  * Main logic of signer application. It uses iText to create signature in PDF.
@@ -204,9 +205,11 @@ public class SignerLogic implements Runnable {
             try {
                 reader = new PdfReader(options.getInFile(), options.getPdfOwnerPwdStrX().getBytes());
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 try {
                     reader = new PdfReader(options.getInFile(), new byte[0]);
                 } catch (Exception e2) {
+                    TGS_UnSafe.throwIfInterruptedException(e2);
                     // try to read without password
                     reader = new PdfReader(options.getInFile());
                 }
@@ -480,6 +483,7 @@ public class SignerLogic implements Runnable {
             fout = null;
             finished = true;
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             LOGGER.log(Level.SEVERE, RES.get("console.exception"), e);
         } catch (OutOfMemoryError e) {
             LOGGER.log(Level.SEVERE, RES.get("console.memoryError"), e);
@@ -488,6 +492,7 @@ public class SignerLogic implements Runnable {
                 try {
                     fout.close();
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
             }

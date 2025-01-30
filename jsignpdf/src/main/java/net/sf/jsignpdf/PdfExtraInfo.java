@@ -34,10 +34,11 @@ import net.sf.jsignpdf.utils.PdfUtils;
 
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfReader;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 
 /**
  * Provides additional information for selected input PDF file.
- * 
+ *
  * @author Josef Cacek
  */
 public class PdfExtraInfo {
@@ -52,8 +53,9 @@ public class PdfExtraInfo {
     }
 
     /**
-     * Returns number of pages in PDF document. If error occures (file not found or sth. similar) -1 is returned.
-     * 
+     * Returns number of pages in PDF document. If error occures (file not found
+     * or sth. similar) -1 is returned.
+     *
      * @return number of pages (or -1 if error occures)
      */
     public int getNumberOfPages() {
@@ -63,21 +65,25 @@ public class PdfExtraInfo {
             try {
                 reader = new PdfReader(options.getInFile(), options.getPdfOwnerPwdStrX().getBytes());
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 try {
                     reader = new PdfReader(options.getInFile(), new byte[0]);
                 } catch (Exception e2) {
+                    TGS_UnSafe.throwIfInterruptedException(e2);
                     // try to read without password
                     reader = new PdfReader(options.getInFile());
                 }
             }
             tmpResult = reader.getNumberOfPages();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             tmpResult = -1;
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                 }
             }
         }
@@ -87,7 +93,7 @@ public class PdfExtraInfo {
 
     /**
      * Returns page info.
-     * 
+     *
      * @param aPage number of page for which size should be returned
      * @return FloatPoint or null
      */
@@ -101,12 +107,14 @@ public class PdfExtraInfo {
                 tmpResult = new PageInfo(tmpRect.getRight(), tmpRect.getTop());
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             // nothing to do
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                 }
             }
         }

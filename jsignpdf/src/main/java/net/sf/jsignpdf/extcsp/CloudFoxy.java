@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf.extcsp;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
 import net.sf.jsignpdf.BasicSignerOptions;
@@ -52,7 +53,8 @@ import java.util.LinkedList;
 import static net.sf.jsignpdf.Constants.RES;
 
 /**
- * This class implements a connector to CloudFoxy (https://gitlab.com/cloudfoxy) - a remote API for smart cards.
+ * This class implements a connector to CloudFoxy (https://gitlab.com/cloudfoxy)
+ * - a remote API for smart cards.
  */
 public class CloudFoxy implements IExternalCryptoProvider {
 
@@ -78,8 +80,10 @@ public class CloudFoxy implements IExternalCryptoProvider {
     /**
      * The method returns a certificate chain for the provided alias
      *
-     * @param options - command line / GUI provided options like keystore, PIN/password, alias, ...
-     * @return Certificate[] - a list of certificates, or null if there was an error
+     * @param options - command line / GUI provided options like keystore,
+     * PIN/password, alias, ...
+     * @return Certificate[] - a list of certificates, or null if there was an
+     * error
      */
     @Override
     public Certificate[] getChain(BasicSignerOptions options) {
@@ -98,7 +102,7 @@ public class CloudFoxy implements IExternalCryptoProvider {
         int port = Integer.parseInt(address[1]);
 
         try {
-            String line = readRequest(hostname,port,cert_chain_request);
+            String line = readRequest(hostname, port, cert_chain_request);
 
             if (line == null) {
                 return null;
@@ -134,11 +138,13 @@ public class CloudFoxy implements IExternalCryptoProvider {
     }
 
     /**
-     * The method takes an initial fingerprint of the document, and creates and external signature, which can be used for the
-     * 'setExternalDigest' method.
+     * The method takes an initial fingerprint of the document, and creates and
+     * external signature, which can be used for the 'setExternalDigest' method.
      *
-     * @param options - command line / GUI provided options like keystore, PIN/password, alias, ...
-     * @param fingerprint - byte array containing the document fingerprint (only SHA1 and SHA256 are supported)
+     * @param options - command line / GUI provided options like keystore,
+     * PIN/password, alias, ...
+     * @param fingerprint - byte array containing the document fingerprint (only
+     * SHA1 and SHA256 are supported)
      * @return byte[] with the signature, null if there was an error
      */
     @Override
@@ -181,7 +187,7 @@ public class CloudFoxy implements IExternalCryptoProvider {
         int port = Integer.parseInt(address[1]);
 
         try {
-            String line = readRequest(hostname,port,signing_request);
+            String line = readRequest(hostname, port, signing_request);
             String[] signatureParts = line.split(":");
             if (signatureParts.length < 2) {
                 LOGGER.severe(RES.get("extcsp.nosignature"));
@@ -207,7 +213,8 @@ public class CloudFoxy implements IExternalCryptoProvider {
     /**
      * Query the crypto provider and return a list of aliases available.
      *
-     * @param options - command line / GUI provided options like keystore, PIN/password, alias, ...
+     * @param options - command line / GUI provided options like keystore,
+     * PIN/password, alias, ...
      * @return LinkedList<String> - a list of names
      * @throws NullPointerException - when the list can't be created
      */
@@ -223,7 +230,7 @@ public class CloudFoxy implements IExternalCryptoProvider {
             String address[] = options.getKsFile().split(":");
             try {
                 String alias_request = ">all readers\n>" + cmdId + ":ALIASES";
-                String aliasesRaw= readRequest(address[0], Integer.parseInt(address[1]),alias_request);
+                String aliasesRaw = readRequest(address[0], Integer.parseInt(address[1]), alias_request);
 
                 String aliases_response[] = aliasesRaw.split(":");
                 aliasList = new LinkedList<String>();
@@ -243,6 +250,7 @@ public class CloudFoxy implements IExternalCryptoProvider {
                 LOGGER.severe(RES.get("extcsp.iohost", ex.getMessage()));
                 throw new NullPointerException(RES.get("error.keystoreNull"));
             } catch (Exception ex) {
+                TGS_UnSafe.throwIfInterruptedException(ex);
                 throw new NullPointerException(RES.get("error.keystoreNull"));
             }
         }
@@ -250,7 +258,8 @@ public class CloudFoxy implements IExternalCryptoProvider {
     }
 
     /**
-     * Makes socket request to the given address and sends the given text challenge. Returns response as a String.
+     * Makes socket request to the given address and sends the given text
+     * challenge. Returns response as a String.
      *
      * @param hostName hostname part of the socket address
      * @param port port part of the socket address
@@ -258,7 +267,6 @@ public class CloudFoxy implements IExternalCryptoProvider {
      * @return first line of the response as a String
      * @throws IOException when the request fails
      */
-
     public String readRequest(String hostName, int port, String requestMessage) throws IOException {
         Socket socket = new Socket(hostName, port);
         OutputStream output = socket.getOutputStream();

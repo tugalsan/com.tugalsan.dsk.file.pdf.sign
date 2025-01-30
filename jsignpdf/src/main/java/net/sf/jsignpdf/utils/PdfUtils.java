@@ -32,10 +32,11 @@ package net.sf.jsignpdf.utils;
 import java.io.IOException;
 
 import com.lowagie.text.pdf.PdfReader;
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 
 /**
  * Utilities to handle PDFs.
- * 
+ *
  * @author Josef Cacek
  */
 public class PdfUtils {
@@ -47,7 +48,7 @@ public class PdfUtils {
      * <li>with empty password</li>
      * <li>with given password</li>
      * </ul>
-     * 
+     *
      * @param aFileName file name of PDF
      * @param aPassword password
      * @return
@@ -59,9 +60,11 @@ public class PdfUtils {
             // try to read without password
             tmpReader = new PdfReader(aFileName);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             try {
                 tmpReader = new PdfReader(aFileName, new byte[0]);
             } catch (Exception e2) {
+                TGS_UnSafe.throwIfInterruptedException(e2);
                 tmpReader = new PdfReader(aFileName, aPassword);
             }
         }
@@ -75,7 +78,7 @@ public class PdfUtils {
      * <li>with empty password</li>
      * <li>with given password</li>
      * </ul>
-     * 
+     *
      * @param content content of PDF
      * @param aPassword password
      * @return
@@ -87,9 +90,11 @@ public class PdfUtils {
             // try to read without password
             tmpReader = new PdfReader(content);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             try {
                 tmpReader = new PdfReader(content, new byte[0]);
             } catch (Exception e2) {
+                TGS_UnSafe.throwIfInterruptedException(e2);
                 tmpReader = new PdfReader(content, aPassword);
             }
         }

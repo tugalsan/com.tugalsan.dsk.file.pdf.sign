@@ -31,4 +31,11 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.tugalsan</groupId>
+            <artifactId>com.tugalsan.api.unsafe</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

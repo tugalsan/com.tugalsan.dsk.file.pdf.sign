@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf.ssl;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -45,9 +46,10 @@ import net.sf.jsignpdf.Constants;
 import net.sf.jsignpdf.utils.KeyStoreUtils;
 
 /**
- * TrustManager which works with in-memory copy of cacerts truststore. If {@link Constants#RELAX_SSL_SECURITY} is true then it
- * adds missing server certificates to the truststore.
- * 
+ * TrustManager which works with in-memory copy of cacerts truststore. If
+ * {@link Constants#RELAX_SSL_SECURITY} is true then it adds missing server
+ * certificates to the truststore.
+ *
  * @author Josef Cacek
  */
 public class DynamicX509TrustManager implements X509TrustManager {
@@ -59,7 +61,7 @@ public class DynamicX509TrustManager implements X509TrustManager {
 
     /**
      * Constructor.
-     * 
+     *
      * @throws KeyStoreException
      * @throws NoSuchAlgorithmException
      * @throws CertificateException
@@ -71,24 +73,30 @@ public class DynamicX509TrustManager implements X509TrustManager {
             trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             reloadTrustStore();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             throw new RuntimeException("Unable to create TrustManager.", e);
         }
     }
 
     /**
      * Checks client's cert-chain - no extra step here.
-     * 
-     * @see javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert.X509Certificate[], java.lang.String)
+     *
+     * @see
+     * javax.net.ssl.X509TrustManager#checkClientTrusted(java.security.cert.X509Certificate[],
+     * java.lang.String)
      */
     public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         trustManager.checkClientTrusted(chain, authType);
     }
 
     /**
-     * Checks server's cert-chain. If check fails and {@link Constants#RELAX_SSL_SECURITY} is true then the first certificate
+     * Checks server's cert-chain. If check fails and
+     * {@link Constants#RELAX_SSL_SECURITY} is true then the first certificate
      * from the chain is added to the truststore and the check is repeated.
-     * 
-     * @see javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert.X509Certificate[], java.lang.String)
+     *
+     * @see
+     * javax.net.ssl.X509TrustManager#checkServerTrusted(java.security.cert.X509Certificate[],
+     * java.lang.String)
      */
     public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
         if (Constants.RELAX_SSL_SECURITY) {
@@ -99,6 +107,7 @@ public class DynamicX509TrustManager implements X509TrustManager {
                     trustStore.setCertificateEntry(UUID.randomUUID().toString(), chain[0]);
                     reloadTrustStore();
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                     throw new CertificateException("Unable to recreate TrustManager", e);
                 }
                 trustManager.checkServerTrusted(chain, authType);
@@ -119,7 +128,7 @@ public class DynamicX509TrustManager implements X509TrustManager {
 
     /**
      * Reloads the in-memory trustore.
-     * 
+     *
      * @throws KeyStoreException
      * @throws NoSuchAlgorithmException
      */

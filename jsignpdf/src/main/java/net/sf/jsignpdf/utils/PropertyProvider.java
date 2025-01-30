@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf.utils;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
 import java.io.File;
@@ -122,6 +123,7 @@ public class PropertyProvider {
             try {
                 properties.load(new FileInputStream(aFile));
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 throw new ProperyProviderException("Properties cannot be loaded", e);
             }
         } else {
@@ -141,6 +143,7 @@ public class PropertyProvider {
             try {
                 properties.load(anIS);
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 throw new ProperyProviderException("Properties cannot be loaded", e);
             }
         } else {
@@ -276,6 +279,7 @@ public class PropertyProvider {
                     properties.store(new FileOutputStream(aFile), "Properties saved by PropertyProvider");
                 }
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 throw new ProperyProviderException("Properties cannot be stored", e);
             }
         } else {

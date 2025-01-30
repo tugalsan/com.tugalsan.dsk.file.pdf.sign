@@ -59,7 +59,7 @@ package net.sf.jsignpdf;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -149,7 +149,7 @@ public class InstallCert {
             tmf.init(ks);
             X509TrustManager defaultTrustManager = (X509TrustManager) tmf.getTrustManagers()[0];
             SavingTrustManager tm = new SavingTrustManager(defaultTrustManager);
-            context.init(null, new TrustManager[] { tm }, null);
+            context.init(null, new TrustManager[]{tm}, null);
             SSLSocketFactory factory = context.getSocketFactory();
 
             System.out.println("Opening connection to " + host + ":" + port + "...");
@@ -204,8 +204,7 @@ public class InstallCert {
                     System.out.println("Creating keystore backup");
                     final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
                     final File backupFile = new File(dir, CACERTS_KEYSTORE + "." + dateFormat.format(new java.util.Date()));
-                    try (FileInputStream fis = new FileInputStream(file);
-                            FileOutputStream fos = new FileOutputStream(backupFile)) {
+                    try (FileInputStream fis = new FileInputStream(file); FileOutputStream fos = new FileOutputStream(backupFile)) {
                         final byte[] buffer = new byte[8 * 1024];
                         int n = 0;
                         while (-1 != (n = fis.read(buffer))) {
@@ -213,6 +212,7 @@ public class InstallCert {
                         }
                     }
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
                 System.out.println("Installing certificate...");
@@ -231,6 +231,7 @@ public class InstallCert {
                 System.out.println("Added certificate to keystore '" + file + "' using alias '" + alias + "'");
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             System.out.println();
             System.out.println("----------------------------------------------");
             System.out.println("Problem occured during installing certificate:");

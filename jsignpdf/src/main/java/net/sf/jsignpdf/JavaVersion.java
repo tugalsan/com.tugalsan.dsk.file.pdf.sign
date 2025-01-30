@@ -29,9 +29,11 @@
  */
 package net.sf.jsignpdf;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+
 /**
  * Prints major Java version.
- * 
+ *
  * @author Josef Cacek
  */
 public class JavaVersion {
@@ -53,6 +55,7 @@ public class JavaVersion {
             Object versionObj = Runtime.class.getDeclaredMethod("version").invoke(Runtime.getRuntime());
             return (Integer) rtVersionCl.getDeclaredMethod("major").invoke(versionObj);
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             return 8;
         }
     }

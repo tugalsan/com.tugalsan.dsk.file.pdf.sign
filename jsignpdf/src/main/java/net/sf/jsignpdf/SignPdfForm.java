@@ -29,6 +29,7 @@
  */
 package net.sf.jsignpdf;
 
+import com.tugalsan.api.unsafe.client.TGS_UnSafe;
 import static net.sf.jsignpdf.Constants.RES;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
@@ -88,7 +89,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
 
     public SignPdfForm(int aCloseOperation, BasicSignerOptions options) {
         initComponents();
-        
+
         if (options == null) {
             options = new BasicSignerOptions();
         }
@@ -103,6 +104,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
         try {
             options.loadCmdLine();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
             LOGGER.fine(e.getMessage());
         }
@@ -166,6 +168,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
                 try {
                     data = (List<File>) info.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                 } catch (Exception e) {
+                    TGS_UnSafe.throwIfInterruptedException(e);
                     return false;
                 }
 
@@ -444,6 +447,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
                 tfOutPdfFile.setText(signedPDF.getPath());
             }
         } catch (Exception ex) {
+            TGS_UnSafe.throwIfInterruptedException(ex);
             ex.printStackTrace();
             LOGGER.fine(ex.getMessage());
         }
@@ -1199,6 +1203,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
         try {
             cbAlias.setModel(new DefaultComboBoxModel(KeyStoreUtils.getKeyAliases(options)));
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }// GEN-LAST:event_btnLoadAliasesActionPerformed
@@ -1254,6 +1259,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
                 }
             }
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
             LOGGER.fine(e.getMessage());
         }
@@ -1282,6 +1288,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
                             JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
+                TGS_UnSafe.throwIfInterruptedException(e);
                 tmpResult = false;
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1338,6 +1345,7 @@ public class SignPdfForm extends javax.swing.JFrame implements SignResultListene
             storeToOptions();
             options.storeOptions();
         } catch (Exception e) {
+            TGS_UnSafe.throwIfInterruptedException(e);
             e.printStackTrace();
         }
         PKCS11Utils.unregisterProviders();
