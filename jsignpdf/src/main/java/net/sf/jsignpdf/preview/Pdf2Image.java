@@ -55,7 +55,7 @@ import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PDFParseException;
 import com.sun.pdfview.decrypt.PDFPassword;
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 
 /**
  * Helper class for converting a page in PDF to a {@link BufferedImage} object.
@@ -134,7 +134,7 @@ public class Pdf2Image {
                 tmpResult = pdfDecoder.getPageAsImage(aPage);
             }
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (reader != null) {
@@ -191,7 +191,7 @@ public class Pdf2Image {
                     true // block until drawing is done
             );
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (raf != null) {
@@ -231,14 +231,14 @@ public class Pdf2Image {
             PDFRenderer rendedrer = new PDFRenderer(tmpDoc);
             tmpResult = rendedrer.renderImageWithDPI(aPage - 1, resolution);
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             e.printStackTrace();
         } finally {
             if (tmpDoc != null) {
                 try {
                     tmpDoc.close();
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
             }

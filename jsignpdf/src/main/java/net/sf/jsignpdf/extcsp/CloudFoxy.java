@@ -29,7 +29,7 @@
  */
 package net.sf.jsignpdf.extcsp;
 
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
 import net.sf.jsignpdf.BasicSignerOptions;
@@ -250,7 +250,7 @@ public class CloudFoxy implements IExternalCryptoProvider {
                 LOGGER.severe(RES.get("extcsp.iohost", ex.getMessage()));
                 throw new NullPointerException(RES.get("error.keystoreNull"));
             } catch (Exception ex) {
-                TGS_UnSafe.throwIfInterruptedException(ex);
+                TGS_FuncUtils.throwIfInterruptedException(ex);
                 throw new NullPointerException(RES.get("error.keystoreNull"));
             }
         }

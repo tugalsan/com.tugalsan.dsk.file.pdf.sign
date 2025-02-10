@@ -29,7 +29,7 @@
  */
 package net.sf.jsignpdf;
 
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import static net.sf.jsignpdf.Constants.RES;
 
 import java.awt.image.BufferedImage;
@@ -823,7 +823,7 @@ public class VisibleSignatureDialog extends javax.swing.JDialog {
                     coords[2] = Float.parseFloat(tfPosURX.getText()) / pdfPageInfo.getWidth();
                     coords[3] = Float.parseFloat(tfPosURY.getText()) / pdfPageInfo.getHeight();
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
                 selectionImage.setImage(buffImg);

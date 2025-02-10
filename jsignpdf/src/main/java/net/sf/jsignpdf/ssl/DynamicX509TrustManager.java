@@ -29,7 +29,7 @@
  */
 package net.sf.jsignpdf.ssl;
 
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -73,7 +73,7 @@ public class DynamicX509TrustManager implements X509TrustManager {
             trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             reloadTrustStore();
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             throw new RuntimeException("Unable to create TrustManager.", e);
         }
     }
@@ -107,7 +107,7 @@ public class DynamicX509TrustManager implements X509TrustManager {
                     trustStore.setCertificateEntry(UUID.randomUUID().toString(), chain[0]);
                     reloadTrustStore();
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                     throw new CertificateException("Unable to recreate TrustManager", e);
                 }
                 trustManager.checkServerTrusted(chain, authType);

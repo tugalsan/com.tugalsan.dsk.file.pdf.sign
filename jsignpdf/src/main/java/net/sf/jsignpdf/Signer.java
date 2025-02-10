@@ -29,7 +29,7 @@
  */
 package net.sf.jsignpdf;
 
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import static net.sf.jsignpdf.Constants.EXIT_CODE_NO_COMMAND;
 import static net.sf.jsignpdf.Constants.EXIT_CODE_PARSE_ERR;
 import static net.sf.jsignpdf.Constants.NEW_LINE;
@@ -99,7 +99,7 @@ public class Signer {
         try {
             SSLInitializer.init();
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             LOGGER.log(Level.WARNING, "Unable to re-configure SSL layer", e);
         }
 
@@ -156,7 +156,7 @@ public class Signer {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (Exception e) {
-                TGS_UnSafe.throwIfInterruptedException(e);
+                TGS_FuncUtils.throwIfInterruptedException(e);
                 System.err.println("Can't set Look&Feel.");
             }
             SignPdfForm tmpForm = new SignPdfForm(WindowConstants.EXIT_ON_CLOSE, tmpOpts);
@@ -182,7 +182,7 @@ public class Signer {
                     try {
                         Collections.sort(keyList);
                     } catch (Exception e) {
-                        TGS_UnSafe.throwIfInterruptedException(e);
+                        TGS_FuncUtils.throwIfInterruptedException(e);
                         LOGGER.log(Level.FINER, "Provider's properties keys can't be sorted", e);
                     }
                     Iterator keyIterator = keyList.iterator();
@@ -193,7 +193,7 @@ public class Signer {
                     LOGGER.finer("------------------------------------------------");
                 }
             } catch (Exception e) {
-                TGS_UnSafe.throwIfInterruptedException(e);
+                TGS_FuncUtils.throwIfInterruptedException(e);
                 LOGGER.log(Level.FINER, "Listing security providers failed", e);
             }
         }

@@ -34,7 +34,7 @@ import net.sf.jsignpdf.utils.PdfUtils;
 
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfReader;
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 
 /**
  * Provides additional information for selected input PDF file.
@@ -65,25 +65,25 @@ public class PdfExtraInfo {
             try {
                 reader = new PdfReader(options.getInFile(), options.getPdfOwnerPwdStrX().getBytes());
             } catch (Exception e) {
-                TGS_UnSafe.throwIfInterruptedException(e);
+                TGS_FuncUtils.throwIfInterruptedException(e);
                 try {
                     reader = new PdfReader(options.getInFile(), new byte[0]);
                 } catch (Exception e2) {
-                    TGS_UnSafe.throwIfInterruptedException(e2);
+                    TGS_FuncUtils.throwIfInterruptedException(e2);
                     // try to read without password
                     reader = new PdfReader(options.getInFile());
                 }
             }
             tmpResult = reader.getNumberOfPages();
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             tmpResult = -1;
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                 }
             }
         }
@@ -107,14 +107,14 @@ public class PdfExtraInfo {
                 tmpResult = new PageInfo(tmpRect.getRight(), tmpRect.getTop());
             }
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             // nothing to do
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                 }
             }
         }

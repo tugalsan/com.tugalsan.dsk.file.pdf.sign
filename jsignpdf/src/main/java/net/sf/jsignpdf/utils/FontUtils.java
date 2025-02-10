@@ -39,7 +39,7 @@ import net.sf.jsignpdf.Constants;
 import org.apache.commons.io.IOUtils;
 
 import com.lowagie.text.pdf.BaseFont;
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 
 /**
  * Utilities for handling fonts in visible signature.
@@ -85,12 +85,12 @@ public class FontUtils {
                 l2baseFont = BaseFont.createFont(fontName, fontEncoding, BaseFont.EMBEDDED, BaseFont.CACHED,
                         tmpBaos.toByteArray(), null);
             } catch (Exception e) {
-                TGS_UnSafe.throwIfInterruptedException(e);
+                TGS_FuncUtils.throwIfInterruptedException(e);
                 e.printStackTrace();
                 try {
                     l2baseFont = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED);
                 } catch (Exception ex) {
-                    TGS_UnSafe.throwIfInterruptedException(ex);
+                    TGS_FuncUtils.throwIfInterruptedException(ex);
                     // where is the problem, dear Watson?
                 }
             }

@@ -59,7 +59,7 @@ package net.sf.jsignpdf;
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -212,7 +212,7 @@ public class InstallCert {
                         }
                     }
                 } catch (Exception e) {
-                    TGS_UnSafe.throwIfInterruptedException(e);
+                    TGS_FuncUtils.throwIfInterruptedException(e);
                     e.printStackTrace();
                 }
                 System.out.println("Installing certificate...");
@@ -231,7 +231,7 @@ public class InstallCert {
                 System.out.println("Added certificate to keystore '" + file + "' using alias '" + alias + "'");
             }
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             System.out.println();
             System.out.println("----------------------------------------------");
             System.out.println("Problem occured during installing certificate:");

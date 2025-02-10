@@ -29,7 +29,7 @@
  */
 package net.sf.jsignpdf.utils;
 
-import com.tugalsan.api.unsafe.client.TGS_UnSafe;
+import com.tugalsan.api.function.client.TGS_FuncUtils;
 import static net.sf.jsignpdf.Constants.LOGGER;
 
 import java.io.File;
@@ -136,7 +136,7 @@ public class PKCS11Utils {
         try {
             Security.removeProvider(providerName);
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             LOGGER.log(Level.SEVERE, "Removing provider failed", e);
         }
         return null;
@@ -152,7 +152,7 @@ public class PKCS11Utils {
             LOGGER.fine("KeyStore type " + type + " is supported by the provider " + providerName);
             return provider.getName();
         } catch (Exception e) {
-            TGS_UnSafe.throwIfInterruptedException(e);
+            TGS_FuncUtils.throwIfInterruptedException(e);
             LOGGER.fine("KeyStore type " + type + " is not supported by the provider " + providerName);
         }
         return null;
