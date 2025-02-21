@@ -178,7 +178,7 @@ public class JSignEncryptor {
 //     * @return the String (with hexidecimal format) form of the byte array
 //     */
 //    public static String toHexString(byte[] data, int offset, int length) {
-//        StringBuffer s = new StringBuffer(length * 2);
+//        StringBuilder s = new StringBuilder(length * 2);
 //        int end = offset + length;
 //
 //        for (int i = offset; i < end; i++) {
