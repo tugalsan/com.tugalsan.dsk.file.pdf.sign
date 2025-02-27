@@ -51,9 +51,16 @@ import net.sf.jsignpdf.utils.ResourceProvider;
  */
 public class Constants {
 
+    private static <T> ClassLoader getClassLoader(Class<T> clazz) {
+        ClassLoader cl = clazz.getClassLoader();
+        if (cl == null) {
+            return Thread.currentThread().getContextClassLoader();
+        }
+        return cl;
+    }
+
     static {
-        try (InputStream is = Constants.class.getClassLoader().
-                getResourceAsStream("logging.properties")) {
+        try (InputStream is = getClassLoader(Constants.class).getResourceAsStream("logging.properties")) {
             LogManager.getLogManager().readConfiguration(is);
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,31 +75,34 @@ public class Constants {
     public static final String VERSION;
 
     /**
-     * Home directory of current user. It's not a real constant it only holds value of
-     * <code>System.getProperty("user.home")</code>
+     * Home directory of current user. It's not a real constant it only holds
+     * value of <code>System.getProperty("user.home")</code>
      */
     public static final String USER_HOME = System.getProperty("user.home");
 
     /**
-     * Value of {@code jsignpdf.home} system property. The property value (when provided) can contain path to JSignPdf home
-     * directory. It can be used in cases where JSignPdf is not executed from it's home directory. This value takes precedence
-     * over the {@link #ENV_JSIGNPDF_HOME}.
+     * Value of {@code jsignpdf.home} system property. The property value (when
+     * provided) can contain path to JSignPdf home directory. It can be used in
+     * cases where JSignPdf is not executed from it's home directory. This value
+     * takes precedence over the {@link #ENV_JSIGNPDF_HOME}.
      *
      * @see #ENV_JSIGNPDF_HOME
      */
     public static final String SYSPROP_JSIGNPDF_HOME = System.getProperty("jsignpdf.home");
 
     /**
-     * Value of {@code JSIGNPDF_HOME} environment variable. The variable value (when provided) can contain path to JSignPdf home
-     * directory. It can be used in cases where JSignPdf is not executed from it's home directory. This
-     * {@link #SYSPROP_JSIGNPDF_HOME} value takes precedence over this one.
+     * Value of {@code JSIGNPDF_HOME} environment variable. The variable value
+     * (when provided) can contain path to JSignPdf home directory. It can be
+     * used in cases where JSignPdf is not executed from it's home directory.
+     * This {@link #SYSPROP_JSIGNPDF_HOME} value takes precedence over this one.
      *
      * @see #SYSPROP_JSIGNPDF_HOME
      */
     public static final String ENV_JSIGNPDF_HOME = System.getenv("JSIGNPDF_HOME");
 
     /**
-     * Filename (in USER_HOME), where filled values from JSign application are stored.
+     * Filename (in USER_HOME), where filled values from JSign application are
+     * stored.
      *
      * @see #USER_HOME
      */
