@@ -75,7 +75,7 @@
                 </executions>
                 <configuration>
                     <executable>java</executable>
-                    <commandlineArgs>-jar C:/git/trm/com.tugalsan.trm.migration.jakarta/target/com.tugalsan.trm.migration.jakarta-1.0.9-SNAPSHOT-shaded.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\jsignpdf\target\jsignpdf-2.3.0-SNAPSHOT-jar-with-dependencies.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar</commandlineArgs>
+                    <commandlineArgs>-jar C:/git/trm/com.tugalsan.trm.migration.jakarta/target/com.tugalsan.trm.migration.jakarta-1.0.10-SNAPSHOT-shaded.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\jsignpdf\target\jsignpdf-2.3.0-SNAPSHOT-jar-with-dependencies.jar C:\git\dsk\com.tugalsan.dsk.pdf.sign\target\com.tugalsan.dsk.pdf.sign-1.0-SNAPSHOT-jar-with-dependencies.jar</commandlineArgs>
                 </configuration>
             </plugin>
             <plugin>
